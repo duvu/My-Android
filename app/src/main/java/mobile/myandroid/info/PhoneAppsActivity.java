@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -28,6 +29,7 @@ import mobile.myandroid.R;
  * Created by beou on 26/10/2015.
  */
 public class PhoneAppsActivity extends AppCompatActivity {
+    private static PackageManager packageManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +56,14 @@ public class PhoneAppsActivity extends AppCompatActivity {
                 openApplication(PhoneAppsActivity.this, item.getPackageName());
             }
         });
+    }
+
+    @Override
+    public PackageManager getPackageManager() {
+        if (packageManager == null) {
+            packageManager = super.getPackageManager();
+        }
+        return packageManager;
     }
 
     private List<AppItem> getAppsList() throws PackageManager.NameNotFoundException {
@@ -174,18 +184,35 @@ public class PhoneAppsActivity extends AppCompatActivity {
                 holder.appIcon = (ImageView) convertView.findViewById(R.id.img_app_icon);
                 holder.appName =  (TextView) convertView.findViewById(R.id.txt_app_name);
                 holder.appInstalled = (TextView) convertView.findViewById(R.id.txt_app_installed);
-                //holder.btnAppDel = (ImageButton) convertView.findViewById(R.id.btn_app_del);
+                holder.btnAppDel = (ImageButton) convertView.findViewById(R.id.btn_app_del);
                 convertView.setTag(holder);
             } else {
                 holder = (AppViewHolder)convertView.getTag();
             }
-            //TODO: add info to holder here
-            holder.appIcon.setImageDrawable(getItem(position).getAppIcon());
-            holder.appName.setText(getItem(position).getAppName());
-            holder.appInstalled.setText(getItem(position).getInstalledDate().toString());
+
+            final AppItem item = (AppItem) getItem(position);
+
+            holder.appIcon.setImageDrawable(item.getAppIcon());
+            holder.appName.setText(item.getAppName());
+            holder.appInstalled.setText(item.getInstalledDate().toString());
+            holder.btnAppDel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //-- show a dialogAlert
+                    //-- delete app
+                    uninstallApp(item);
+                }
+            });
 
             return convertView;
         }
+    }
+
+    private void uninstallApp(AppItem item) {
+        //Uninstall app here
+        Uri packageURI = Uri.parse("package:"+item.getPackageName());
+        Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, packageURI);
+        startActivity(uninstallIntent);
     }
 
     private class AppViewHolder {
