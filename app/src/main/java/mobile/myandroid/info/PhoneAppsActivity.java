@@ -174,7 +174,7 @@ public class PhoneAppsActivity extends AppCompatActivity {
                 holder.appIcon = (ImageView) convertView.findViewById(R.id.img_app_icon);
                 holder.appName =  (TextView) convertView.findViewById(R.id.txt_app_name);
                 holder.appInstalled = (TextView) convertView.findViewById(R.id.txt_app_installed);
-                holder.btnAppDel = (ImageButton) convertView.findViewById(R.id.btn_app_del);
+                //holder.btnAppDel = (ImageButton) convertView.findViewById(R.id.btn_app_del);
                 convertView.setTag(holder);
             } else {
                 holder = (AppViewHolder)convertView.getTag();
