@@ -11,7 +11,7 @@ import java.util.List;
 
 import mobile.myandroid.R;
 import mobile.myandroid.storage.StorageInfo;
-import mobile.myandroid.storage.StorageTool;
+import mobile.myandroid.storage.StorageUtils;
 
 /**
  * My Android
@@ -33,7 +33,7 @@ public class MemoryActivity extends AppCompatActivity {
         TextView txtPhoneMemInfo = (TextView) findViewById(R.id.txt_phone_memory_info);
         TextView txtSdCardInfo = (TextView) findViewById(R.id.txt_sdcard_info);
 
-        List<StorageInfo> lStorage = StorageTool.getStorageList();
+        List<StorageInfo> lStorage = StorageUtils.getStorageList();
         long totalInternal = 0;
         long availInternal = 0;
         long totalExternal = 0;

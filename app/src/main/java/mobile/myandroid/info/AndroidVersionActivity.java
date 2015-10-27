@@ -4,6 +4,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import mobile.myandroid.R;
@@ -20,10 +21,12 @@ public class AndroidVersionActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         TextView txtAndroidVersion = (TextView) findViewById(R.id.txt_android_version);
+        ImageView imgAndroidVersion = (ImageView) findViewById(R.id.img_android_version);
         String androidVersion = getCurrentVersion();
         androidVersion+="\n";
         androidVersion+=Build.VERSION.RELEASE;
         txtAndroidVersion.setText(androidVersion);
+        imgAndroidVersion.setImageDrawable(getResources().getDrawable(R.drawable.icon_app_version));
     }
 
     private String getCurrentVersion () {

@@ -1,6 +1,5 @@
 package mobile.myandroid.storage;
 
-import java.io.File;
 import java.util.List;
 
 /**
@@ -8,17 +7,7 @@ import java.util.List;
  */
 public class GeneralStorage implements Storage {
     @Override
-    public List<File> getAllStorage() {
-        return null;
-    }
-
-    @Override
-    public File getExternalSDCard() {
-        return null;
-    }
-
-    @Override
-    public File getInternalSDCard() {
+    public List<StorageInfo> getAllStorage() {
         return null;
     }
 }

@@ -18,7 +18,30 @@ import java.util.StringTokenizer;
  * Created by beou on 27/10/2015.
  * http://stackoverflow.com/questions/5694933/find-an-external-sd-card-location
  */
-public class StorageTool {
+public class StorageUtils {
+    Storage storage;
+    private static StorageUtils instance = null;
+
+
+    public static StorageUtils getInstance(Storage storage) {
+        if (instance == null) {
+            instance = new StorageUtils(storage);
+        }
+        return instance;
+    }
+
+    public StorageUtils(Storage storage) {
+        this.storage = storage;
+    }
+
+    public Storage getStorage() {
+        return storage;
+    }
+
+    public void setStorage(Storage storage) {
+        this.storage = storage;
+    }
+
     private static final String TAG = "StorageUtils";
 
     public static List<StorageInfo> getStorageList() {
