@@ -20,7 +20,6 @@ import mobile.myandroid.util.StringTool;
  * Created by beou on 26/10/2015.
  */
 public class MemoryActivity extends AppCompatActivity {
-    private static final String ERROR = "ERROR";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,12 +51,12 @@ public class MemoryActivity extends AppCompatActivity {
             }
         }
 
-        pbPhone.setMax((int) StringTool.formatGB(totalInternal));
-        pbPhone.setProgress((int) StringTool.formatGB(availInternal));
+        pbPhone.setMax((int) StringTool.formatSizeGB(totalInternal));
+        pbPhone.setProgress((int) StringTool.formatSizeGB(availInternal));
         txtPhoneMemInfo.setText(StringTool.formatSize(totalInternal));
         if (totalExternal > 0) {
-            pbSdcard.setMax((int) StringTool.formatGB(totalExternal));
-            pbSdcard.setProgress((int) StringTool.formatGB(availExternal));
+            pbSdcard.setMax((int) StringTool.formatSizeGB(totalExternal));
+            pbSdcard.setProgress((int) StringTool.formatSizeGB(availExternal));
             txtSdCardInfo.setText(StringTool.formatSize(totalExternal));
         } else {
             pbSdcard.setMax(0);

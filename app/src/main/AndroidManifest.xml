@@ -45,7 +45,7 @@
         <activity android:name=".info.CallLogActivity"
             android:label="@string/call_history"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".info.CameraInfomationActivity"
+        <activity android:name=".info.CameraInformationActivity"
             android:label="@string/camera_information"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".info.InternetActivity"

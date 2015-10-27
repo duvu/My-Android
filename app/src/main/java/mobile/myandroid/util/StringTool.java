@@ -1,7 +1,5 @@
 package mobile.myandroid.util;
 
-import android.util.Log;
-
 /**
  * Created by beou on 27/10/2015.
  */
@@ -15,12 +13,16 @@ public class StringTool {
     public static boolean isBlank(String s) {
         return ((s == null) || (s.length()==0));
     }
-    public static double formatGB(long size) {
-        return (double)(size/=(1024.0*1024.0*1024.0));
+    public static double formatSizeGB(long size) {
+        double _size = size;
+        return _size/=(1024.0*1024.0*1024.0);
+    }
+    public static double formatSizeMB(long size) {
+        double _size = size;
+        return _size/=(1024.0*1024.0);
     }
 
     public static String formatSize(long size) {
-        Log.i(TAG, "Size:" + size);
         double _size = size;
         String suffix = null;
         if (_size >= KILO) {

@@ -23,7 +23,7 @@ import java.util.List;
 
 import mobile.myandroid.info.AndroidVersionActivity;
 import mobile.myandroid.info.CallLogActivity;
-import mobile.myandroid.info.CameraInfomationActivity;
+import mobile.myandroid.info.CameraInformationActivity;
 import mobile.myandroid.info.InternetActivity;
 import mobile.myandroid.info.ManufacturerAndModelActivity;
 import mobile.myandroid.info.MemoryActivity;
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(CallLogActivity.class);
                         break;
                     case R.string.camera_information:
-                        startActivity(CameraInfomationActivity.class);
+                        startActivity(CameraInformationActivity.class);
                         break;
                     case R.string.internet:
                         startActivity(InternetActivity.class);
