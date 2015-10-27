@@ -12,6 +12,7 @@ import java.util.List;
 import mobile.myandroid.R;
 import mobile.myandroid.storage.StorageInfo;
 import mobile.myandroid.storage.StorageUtils;
+import mobile.myandroid.util.StringTool;
 
 /**
  * My Android
@@ -51,13 +52,13 @@ public class MemoryActivity extends AppCompatActivity {
             }
         }
 
-        pbPhone.setMax((int) formatGB(totalInternal));
-        pbPhone.setProgress((int) formatGB(availInternal));
-        txtPhoneMemInfo.setText(formatSize(totalInternal));
+        pbPhone.setMax((int) StringTool.formatGB(totalInternal));
+        pbPhone.setProgress((int) StringTool.formatGB(availInternal));
+        txtPhoneMemInfo.setText(StringTool.formatSize(totalInternal));
         if (totalExternal > 0) {
-            pbSdcard.setMax((int) formatGB(totalExternal));
-            pbSdcard.setProgress((int) formatGB(availExternal));
-            txtSdCardInfo.setText(formatSize(totalExternal));
+            pbSdcard.setMax((int) StringTool.formatGB(totalExternal));
+            pbSdcard.setProgress((int) StringTool.formatGB(availExternal));
+            txtSdCardInfo.setText(StringTool.formatSize(totalExternal));
         } else {
             pbSdcard.setMax(0);
             pbSdcard.setProgress(0);
@@ -65,31 +66,5 @@ public class MemoryActivity extends AppCompatActivity {
         }
     }
 
-    public double formatGB(long size) {
-        return (double)(size/=(1024.0*1024.0*1024.0));
-    }
 
-    public static String formatSize(long size) {
-        String suffix = null;
-        if (size >= 1024.0) {
-            suffix = "KB";
-            size /= 1024.0;
-            if (size >= 1024) {
-                suffix = "MB";
-                size /= 1024.0;
-                if (size >= 1024) {
-                    suffix = "GB";
-                    size /=1024.0;
-                }
-            }
-        }
-        StringBuilder resultBuffer = new StringBuilder(Long.toString(size));
-        int commaOffset = resultBuffer.length() - 3;
-        while (commaOffset > 0) {
-            resultBuffer.insert(commaOffset, ',');
-            commaOffset -= 3;
-        }
-        if (suffix != null) resultBuffer.append(suffix);
-        return resultBuffer.toString();
-    }
 }
