@@ -3,6 +3,7 @@ package mobile.myandroid.info;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -18,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -74,12 +76,12 @@ public class PhoneAppsActivity extends AppCompatActivity {
         for (ApplicationInfo ai : packages) {
             String appName = pm.getApplicationLabel(ai).toString();
             Drawable appIcon = pm.getApplicationIcon(ai);
-            long lastUpdateTime = pm.getPackageInfo(ai.packageName, PackageManager.GET_META_DATA).lastUpdateTime;
+            PackageInfo packageInfo = pm.getPackageInfo(ai.packageName, PackageManager.GET_META_DATA);
+            long lastUpdateTime = packageInfo.lastUpdateTime;
             Date lastUpdated = new Date(lastUpdateTime);
             AppItem item = new AppItem(appName, appIcon, lastUpdated);
-
             item.setPackageName(ai.packageName);
-
+            item.setPackageInfo(packageInfo);
             listApps.add(item);
         }
         return listApps;
@@ -97,6 +99,7 @@ public class PhoneAppsActivity extends AppCompatActivity {
     }
 
     private class AppItem {
+        private PackageInfo packageInfo;
         private String packageName;
         private String appName;
         private Drawable appIcon;
@@ -115,6 +118,14 @@ public class PhoneAppsActivity extends AppCompatActivity {
             this.appName = appName;
             this.appIcon = appIcon;
             this.installedDate = installedDate;
+        }
+
+        public PackageInfo getPackageInfo() {
+            return packageInfo;
+        }
+
+        public void setPackageInfo(PackageInfo packageInfo) {
+            this.packageInfo = packageInfo;
         }
 
         public String getPackageName() {
@@ -209,10 +220,18 @@ public class PhoneAppsActivity extends AppCompatActivity {
     }
 
     private void uninstallApp(AppItem item) {
-        //Uninstall app here
-        Uri packageURI = Uri.parse("package:"+item.getPackageName());
-        Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, packageURI);
-        startActivity(uninstallIntent);
+        if (isSystemPackage(item.getPackageInfo())) {
+            Toast.makeText(this, getString(R.string.cannot_remove_cause_system_app), Toast.LENGTH_LONG).show();
+        } else {
+            //Uninstall app here
+            Uri packageURI = Uri.parse("package:" + item.getPackageName());
+            Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, packageURI);
+            startActivity(uninstallIntent);
+        }
+    }
+    private boolean isSystemPackage(PackageInfo pkgInfo) {
+        return (pkgInfo.applicationInfo.flags &
+                ApplicationInfo.FLAG_SYSTEM) != 0;
     }
 
     private class AppViewHolder {
