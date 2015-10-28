@@ -9,7 +9,9 @@
     tools:context=".info.ScreenSizeActivity">
     <TextView
         android:id="@+id/txt_screen_size_inch"
+        android:textSize="20sp"
         android:layout_above="@+id/img_screen_size_base"
+        android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <ImageView
@@ -22,7 +24,7 @@
         android:id="@+id/txt_screen_size_pixels"
         android:textSize="20sp"
         android:layout_below="@id/img_screen_size_base"
-        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </RelativeLayout>
