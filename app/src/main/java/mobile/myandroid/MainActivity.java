@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
     private void startActivity(Class cls) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             Intent intent = new Intent(MainActivity.this, cls);
-            //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             startActivity(intent);
         } else {
             finish();

@@ -8,7 +8,9 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,12 +27,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import mobile.myandroid.BaseActivity;
 import mobile.myandroid.R;
 
 /**
  * Created by beou on 26/10/2015.
  */
-public class PhoneAppsActivity extends AppCompatActivity {
+public class PhoneAppsActivity extends BaseActivity {
     private static PackageManager packageManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,21 @@ public class PhoneAppsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_phone_apps);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //--
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this,
+                drawer,
+                toolbar,
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        //--
+
 
         List<AppItem> items = null;
         try {
