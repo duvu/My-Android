@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/nav_app_search"
+            android:icon="@drawable/icon_app_search"
+            android:title="@string/my_phone_apps" />
+        <item android:id="@+id/nav_memory"
+            android:icon="@drawable/icon_memory"
+            android:title="@string/memory" />
+        <item android:id="@+id/nav_screenshot"
+            android:icon="@drawable/icon_screenshot"
+            android:title="@string/screenshot" />
+        <item android:id="@+id/nav_call_history"
+            android:icon="@drawable/icon_call_log"
+            android:title="@string/call_history" />
+        <item android:id="@+id/nav_camera_information"
+            android:icon="@drawable/icon_camera"
+            android:title="@string/camera_information" />
+        <item android:id="@+id/nav_internet"
+            android:icon="@drawable/icon_network"
+            android:title="@string/internet" />
+        <item android:id="@+id/nav_screen_size"
+            android:icon="@drawable/icon_screen_size"
+            android:title="@string/screen_size" />
+        <item android:id="@+id/nav_screen_density"
+            android:icon="@drawable/icon_density"
+            android:title="@string/screen_density"/>
+        <item android:id="@+id/nav_ram"
+            android:icon="@drawable/icon_ram"
+            android:title="@string/ram" />
+        <item android:id="@+id/nav_android_version"
+            android:icon="@drawable/icon_android_version"
+            android:title="@string/android_version"/>
+        <item android:id="@+id/nav_manufacturer_model"
+            android:icon="@drawable/icon_manufacturer_model"
+            android:title="@string/manufacturer_and_model"/>
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item android:id="@+id/nav_share" android:icon="@android:drawable/ic_menu_share"
+                android:title="Share" />
+            <item android:id="@+id/nav_send" android:icon="@android:drawable/ic_menu_send"
+                android:title="Send" />
+        </menu>
+    </item>
+
+</menu>

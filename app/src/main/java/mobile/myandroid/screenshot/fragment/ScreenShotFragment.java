@@ -32,16 +32,16 @@ public class ScreenShotFragment extends Fragment {
         ImageView imgScreenShot = (ImageView) view.findViewById(R.id.img_screen_shot);
 
         switch (option) {
-            case 1:
+            case 0:
                 imgScreenShot.setImageDrawable(getResources().getDrawable(R.drawable.screenshot_option_power_vol_down));
                 break;
-            case 2:
+            case 1:
                 imgScreenShot.setImageDrawable(getResources().getDrawable(R.drawable.screenshot_option_power_vol_up));
                 break;
-            case 3:
+            case 2:
                 imgScreenShot.setImageDrawable(getResources().getDrawable(R.drawable.screenshot_option_home_vol_down));
                 break;
-            case 4:
+            case 3:
                 imgScreenShot.setImageDrawable(getResources().getDrawable(R.drawable.screenshot_option_power_home));
                 break;
         }

@@ -2,12 +2,46 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-
     <android.support.v4.view.ViewPager
         android:id="@+id/frgment_view_pager_screen_shot"
         android:layout_marginTop="?attr/actionBarSize"
+        android:layout_above="@+id/layout_screen_shot_bottom"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+    <RelativeLayout
+        android:id="@+id/layout_screen_shot_bottom"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_border_top">
+        <TextView
+            android:id="@+id/txt_screen_shot_navigate"
+            android:textSize="16sp"
+            android:text="@string/did_it_work"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btn_screen_shot_worked"
+            android:layout_toLeftOf="@+id/btn_screen_shot_not_worked"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:text="@string/worked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button"/>
+        <Button
+            android:id="@+id/btn_screen_shot_not_worked"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:text="@string/not_worked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button"
+            android:drawableEnd="@drawable/next_button_normal_state"
+            android:drawableRight="@drawable/next_button_normal_state"/>
 
+    </RelativeLayout>
 </RelativeLayout>

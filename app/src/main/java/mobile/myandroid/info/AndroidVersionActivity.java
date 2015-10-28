@@ -2,17 +2,28 @@ package mobile.myandroid.info;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.mikepenz.materialdrawer.Drawer;
 
 import mobile.myandroid.R;
 
 /**
  * Created by beou on 26/10/2015.
  */
-public class AndroidVersionActivity extends AppCompatActivity {
+public class AndroidVersionActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener{
+
+    private Drawer result = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,15 +31,45 @@ public class AndroidVersionActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        TextView txtAndroidVersion = (TextView) findViewById(R.id.txt_android_version);
+        //--
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this,
+                drawer,
+                toolbar,
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        //--
+        TextView txtAndroidVersionName = (TextView) findViewById(R.id.txt_android_version_name);
+        TextView txtAndroidVersionNumber = (TextView) findViewById(R.id.txt_android_version_number);
+
         ImageView imgAndroidVersion = (ImageView) findViewById(R.id.img_android_version);
         String androidVersion = getCurrentVersion();
-        androidVersion+="\n";
-        androidVersion+=Build.VERSION.RELEASE;
-        txtAndroidVersion.setText(androidVersion);
+        txtAndroidVersionName.setText(androidVersion);
+        txtAndroidVersionNumber.setText(Build.VERSION.RELEASE);
         imgAndroidVersion.setImageDrawable(getResources().getDrawable(R.drawable.icon_app_version));
     }
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        //getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
     private String getCurrentVersion () {
         switch (Build.VERSION.SDK_INT) {
             case Build.VERSION_CODES.BASE:
@@ -71,6 +112,13 @@ public class AndroidVersionActivity extends AppCompatActivity {
             case Build.VERSION_CODES.M:
                 return "M";
         }
-        return "UNKNOWN";
+        return "Unknown";
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }

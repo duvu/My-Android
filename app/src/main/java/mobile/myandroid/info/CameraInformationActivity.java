@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Size;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,20 +88,26 @@ public class CameraInformationActivity extends AppCompatActivity {
 
         } else {
             int numOfCam = Camera.getNumberOfCameras();
-            for (int i = 0; i < numOfCam; i++) {
-                CamInfo camInfo = null;
-                Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
-                Camera.getCameraInfo(i, cameraInfo);
-                if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
-                    Camera camera = Camera.open(Camera.CameraInfo.CAMERA_FACING_FRONT);
-                    Camera.Size size = camera.getParameters().getPictureSize();
-                    camInfo = new CamInfo(size.height, size.width, "Front");
-                } else if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_BACK) {
-                    Camera camera = Camera.open(Camera.CameraInfo.CAMERA_FACING_BACK);
-                    Camera.Size size = camera.getParameters().getPictureSize();
-                    camInfo = new CamInfo(size.height, size.width, "Back");
+            try {
+
+                for (int i = 0; i < numOfCam; i++) {
+                    CamInfo camInfo = null;
+                    Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
+                    Camera.getCameraInfo(i, cameraInfo);
+                    if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+                        Camera camera = Camera.open(Camera.CameraInfo.CAMERA_FACING_FRONT);
+                        Camera.Size size = camera.getParameters().getPictureSize();
+                        camInfo = new CamInfo(size.height, size.width, "Front");
+                    } else if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_BACK) {
+                        Camera camera = Camera.open(Camera.CameraInfo.CAMERA_FACING_BACK);
+                        Camera.Size size = camera.getParameters().getPictureSize();
+                        camInfo = new CamInfo(size.height, size.width, "Back");
+                    }
+                    listCam.add(camInfo);
                 }
-                listCam.add(camInfo);
+            } catch (Exception e) {
+                //-- no
+                Toast.makeText(this, R.string.cannot_connect_camera, Toast.LENGTH_LONG).show();
             }
         }
         return listCam;

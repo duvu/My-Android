@@ -26,4 +26,16 @@
     <string name="screenshot_guide">Take picture of your screen by long pressing together the below buttons</string>
     <string name="more_options">More Options</string>
     <string name="did_it_work">Did it work?</string>
+    <string name="not_worked">No</string>
+    <string name="worked">Yes</string>
+    <string name="you_great">Great!</string>
+    <string name="no_more_suggestion">No more suggestions!</string>
+    <string name="you_may_try_again">You may try again.</string>
+    <string name="cancel">Cancel</string>
+    <string name="retry_now">Re-try Now</string>
+    <string name="cannot_connect_camera">Cannot connect camera service!</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
 </resources>

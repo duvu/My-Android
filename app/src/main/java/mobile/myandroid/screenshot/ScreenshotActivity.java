@@ -9,12 +9,14 @@ import android.widget.TextView;
 
 import mobile.myandroid.R;
 import mobile.myandroid.screenshot.fragment.ScreenShotDefault;
+import mobile.myandroid.screenshot.fragment.ScreenShotFragment;
 import mobile.myandroid.screenshot.fragment.ScreenShotPager;
 
 /**
  * Created by beou on 26/10/2015.
  */
-public class ScreenshotActivity extends AppCompatActivity implements View.OnClickListener {
+public class ScreenshotActivity extends AppCompatActivity implements View.OnClickListener,
+        ScreenShotPager.ScreenshotPagerCallback {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +36,15 @@ public class ScreenshotActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onClick(View v) {
+        View viewBottom = findViewById(R.id.layout_screen_shot_bottom);
+        viewBottom.setVisibility(View.GONE);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.frg_screen_shot_container, ScreenShotPager.newInstance()).commit();
+    }
+
+    @Override
+    public void onWorked(int option) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frg_screen_shot_container, ScreenShotFragment.newInstance(option)).commit();
     }
 }
