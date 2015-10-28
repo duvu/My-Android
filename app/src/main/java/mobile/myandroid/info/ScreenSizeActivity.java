@@ -22,13 +22,11 @@ public class ScreenSizeActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        TextView txtDisplaySize = (TextView) findViewById(R.id.txt_screen_size_info);
+        TextView txtDisplaySize = (TextView) findViewById(R.id.txt_screen_size_pixels);
         Point size = getSize();
-
-        String txtSize = "SizeX: " + size.x;
-        txtSize += "\n";
-        txtSize += "SizeY: " + size.y;
-        txtDisplaySize.setText(txtSize);
+        StringBuffer sb = new StringBuffer();
+        sb.append(size.y).append(" x ").append(size.x).append(" pixels");
+        txtDisplaySize.setText(sb.toString());
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
