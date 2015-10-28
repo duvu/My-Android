@@ -55,18 +55,30 @@ public class CameraInformationActivity extends BaseActivity {
 
         if (listCam == null) return;
 
-        TextView txtCameraBack = (TextView) findViewById(R.id.txt_camera_back);
         ImageView imgCameraBack = (ImageView) findViewById(R.id.img_camera_back);
-        TextView txtCameraFront = (TextView) findViewById(R.id.txt_camera_front);
+
+        TextView txtCameraBackDesc = (TextView) findViewById(R.id.txt_camera_back_desc);
+        TextView txtCameraBackSize = (TextView) findViewById(R.id.txt_camera_back_size);
+        TextView txtCameraBackSizeUnit = (TextView) findViewById(R.id.txt_camera_back_size_unit);
+
         ImageView imgCameraFront = (ImageView) findViewById(R.id.img_camera_front);
+
+        TextView txtCameraFrontDesc = (TextView) findViewById(R.id.txt_camera_front_desc);
+        TextView txtCameraFrontSize = (TextView) findViewById(R.id.txt_camera_front_size);
+        TextView txtCameraFrontSizeUnit = (TextView) findViewById(R.id.txt_camera_front_size_unit);
 
         imgCameraBack.setImageDrawable(getResources().getDrawable(R.drawable.back_camera));
         imgCameraFront.setImageDrawable(getResources().getDrawable(R.drawable.front_camera_image));
         for (CamInfo camInfo : listCam) {
             if (camInfo.getCamFacing().equals("Front")) {
-                txtCameraFront.setText(camInfo.getCamDensity() + camInfo.getCamFacing());
+                txtCameraFrontDesc.setText(camInfo.getCamFacing());
+                txtCameraFrontSize.setText(String.valueOf(camInfo.getCamDensity()));
+                txtCameraFrontSizeUnit.setText("Megapixel");
+
             } else if (camInfo.getCamFacing().equals("Back")) {
-                txtCameraBack.setText(camInfo.getCamDensity() + camInfo.getCamFacing());
+                txtCameraBackDesc.setText(camInfo.getCamFacing());
+                txtCameraBackSize.setText(String.valueOf(camInfo.getCamDensity()));
+                txtCameraBackSizeUnit.setText("Megapixel");
             }
         }
     }
