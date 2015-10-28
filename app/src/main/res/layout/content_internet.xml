@@ -12,16 +12,21 @@
         android:id="@+id/txt_internet_type"
         android:textSize="40sp"
         android:textStyle="bold"
-        android:text="test"
+        android:layout_above="@+id/img_internet_icon"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <ImageView
+        android:id="@+id/img_internet_icon"
         android:layout_centerInParent="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <TextView
         android:id="@+id/txt_internet_extra"
-        android:layout_below="@+id/txt_internet_type"
+        android:layout_below="@+id/img_internet_icon"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </RelativeLayout>

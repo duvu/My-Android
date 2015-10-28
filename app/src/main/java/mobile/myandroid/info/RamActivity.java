@@ -6,7 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
 import mobile.myandroid.R;
-import mobile.myandroid.ram.RamUtils;
+import mobile.myandroid.util.RamUtils;
 import mobile.myandroid.util.StringTool;
 
 /**

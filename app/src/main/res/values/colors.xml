@@ -8,4 +8,5 @@
     <color name="transparent">#00000000</color>
     <color name="button_pressed">#8e8d8d</color>
     <color name="button_pressed_border">#5b6db1</color>
+    <color name="button_border">#7882a7</color>
 </resources>

@@ -31,7 +31,7 @@ import mobile.myandroid.info.PhoneAppsActivity;
 import mobile.myandroid.info.RamActivity;
 import mobile.myandroid.info.ScreenDensityActivity;
 import mobile.myandroid.info.ScreenSizeActivity;
-import mobile.myandroid.info.ScreenshotActivity;
+import mobile.myandroid.screenshot.ScreenshotActivity;
 
 public class MainActivity extends AppCompatActivity {
 

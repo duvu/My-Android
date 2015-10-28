@@ -3,10 +3,10 @@ package mobile.myandroid.info;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.DisplayMetrics;
 import android.widget.TextView;
 
 import mobile.myandroid.R;
+import mobile.myandroid.util.ScreenInfo;
 
 /**
  * Created by beou on 26/10/2015.
@@ -19,17 +19,16 @@ public class ScreenDensityActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DisplayMetrics metrics = getResources().getDisplayMetrics();
-
         TextView txtScreenDensity = (TextView) findViewById(R.id.txt_screen_density_info);
+        ScreenInfo sci = ScreenInfo.getInstance(this);
 
-        String txt = "Density: " + metrics.density;
+        String txt = "Density: " + sci.getDensity();
         txt += "\n";
-        txt += "X: " + metrics.xdpi;
+        txt += "X: " + sci.getXdpi();
         txt += "\n";
-        txt += "Y: " + metrics.ydpi;
+        txt += "Y: " + sci.getYdpi();
         txt += "\n";
-        txt += "DPI: " + metrics.densityDpi;
+        txt += "DPI: " + sci.getDensityDPI();
 
         txtScreenDensity.setText(txt);
 

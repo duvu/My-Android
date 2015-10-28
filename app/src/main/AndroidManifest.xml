@@ -39,7 +39,7 @@
         <activity android:name=".info.MemoryActivity"
             android:label="@string/memory"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".info.ScreenshotActivity"
+        <activity android:name=".screenshot.ScreenshotActivity"
             android:label="@string/screenshot"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".info.CallLogActivity"

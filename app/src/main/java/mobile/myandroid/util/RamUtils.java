@@ -1,4 +1,4 @@
-package mobile.myandroid.ram;
+package mobile.myandroid.util;
 
 import android.util.Log;
 
