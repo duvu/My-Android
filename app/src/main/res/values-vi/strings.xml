@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">My Android</string>
+    <string name="action_settings">Cấu hình</string>
+    <string name="android_version">Phiên bản</string>
+    <string name="call_direction">Cuộc gọi</string>
+    <string name="call_history">Lịch sử gọi</string>
+    <string name="camera_information">Thông tin máy ảnh</string>
+    <string name="cancel">Hủy</string>
+    <string name="cannot_connect_camera">Không thể kết nối máy ảnh</string>
+    <string name="cannot_remove_cause_system_app">Bạn không thể xóa phần mềm hệ thống</string>
+    <string name="did_it_work">Thành công?</string>
+    <string name="icon_application">Ảnh ứng dụng</string>
+    <string name="internet">Internet</string>
+    <string name="manufacturer">Nhà sản xuất</string>
+    <string name="manufacturer_and_model">Nhà sản xuất và loại máy</string>
+    <string name="memory">Bộ nhớ</string>
+    <string name="model">Loại máy</string>
+    <string name="more_options">Thêm lựa chọn</string>
+    <string name="my_phone_apps">Các ứng dụng</string>
+    <string name="navigation_drawer_close">Đóng sidebar</string>
+    <string name="navigation_drawer_open">Mở sidebar</string>
+    <string name="no_more_suggestion">Hết lựa chọn</string>
+    <string name="no_name">Không tên</string>
+    <string name="no_sdcard">Không có SDCard</string>
+    <string name="not_worked">Thôi</string>
+    <string name="ram">RAM</string>
+    <string name="retry_now">Thử lại</string>
+    <string name="screen_density">Độ phân giải màn hình</string>
+    <string name="screen_size">Kích thước màn hình</string>
+    <string name="screenshot">Chụp màn hình</string>
+    <string name="screenshot_guide">Hãy giữ tổ hợp phím dưới đây để chụp màn hình</string>
+    <string name="txt_phone">Điện thoại</string>
+    <string name="txt_sdcard">SDCard</string>
+    <string name="unknown">Chưa biết</string>
+    <string name="worked">Có</string>
+    <string name="you_great">Tuyệt!</string>
+    <string name="you_may_try_again">Bạn nên thử lại.</string>
+</resources>
