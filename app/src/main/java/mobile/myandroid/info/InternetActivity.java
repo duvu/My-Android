@@ -20,6 +20,7 @@ import mobile.myandroid.R;
  */
 public class InternetActivity extends BaseActivity {
     private static final String TYPE_UNKNOWN            = "UNKNOWN";
+    private static final String TYPE_NO_CONNECTION      = "NO CONNECTION";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +67,12 @@ public class InternetActivity extends BaseActivity {
         return TYPE_UNKNOWN;
     }
     private NetInfo getNetworkName(NetworkInfo ni) {
+        if (ni == null) {
+            String type = TYPE_NO_CONNECTION;
+            String name = getString(R.string.no_name);
+            Drawable icon = getResources().getDrawable(R.drawable.ic_warning_black_48dp);
+            return new NetInfo(type, name, icon);
+        }
         String type = (ni.isConnected() ? ni.getTypeName() : TYPE_UNKNOWN);
         String name = (ni.isConnected() ? ni.getExtraInfo() : getString(R.string.no_name));
         Drawable icon = null;
