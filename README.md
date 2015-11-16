@@ -1,2 +1,2 @@
 # My-Android
-Opensource android application to view your android phone
+Open source android application to view your android phone
