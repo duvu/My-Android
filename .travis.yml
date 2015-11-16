@@ -1,28 +1,19 @@
 language: android
 android:
   components:
-    - build-tools-23.0.1
-    - extra-android-support
+    # Uncomment the lines below if you want to
+    # use the latest revision of Android SDK Tools
+    # - platform-tools
+    # - tools
+
+    # The BuildTools version used by your project
+    - build-tools-19.1.0
+
+    # The SDK version used to compile your project
+    - android-19
+
+    # Additional components
     - extra-google-google_play_services
     - extra-google-m2repository
     - extra-android-m2repository
-
-before_install:
-  - export TERM=dumb
-  - gradle --version
-
-
-
-before_script:
-  - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
-  - emulator -avd test -no-skin -no-audio -no-window &
-  - adb wait-for-device
-  - adb shell input keyevent 82 &
-  - adb devices
-
-script:
-  # Performs tests (which will do a ./gradlew build task first)
-  # Skips the uninstallAll task as it's always a fresh emulator
-  # Does a logcat dump if anything fails
-  #- ./gradlew connectedAndroidTest -x uninstallAll -PtestSize=small --info  || (adb logcat -d && echo "TESTS FAILED" && exit  1)
-  ./gradlew build
+    - addon-google_apis-google-19
