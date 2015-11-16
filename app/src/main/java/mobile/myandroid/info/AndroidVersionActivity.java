@@ -9,8 +9,6 @@ import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mikepenz.materialdrawer.Drawer;
-
 import mobile.myandroid.BaseActivity;
 import mobile.myandroid.R;
 
@@ -18,8 +16,6 @@ import mobile.myandroid.R;
  * Created by beou on 26/10/2015.
  */
 public class AndroidVersionActivity extends BaseActivity {
-
-    private Drawer result = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
