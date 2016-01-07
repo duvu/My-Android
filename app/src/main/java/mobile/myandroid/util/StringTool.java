@@ -43,4 +43,8 @@ public class StringTool {
         sb.append(suffix);
         return sb.toString();
     }
+
+    public static String formatDuration(long s) {
+        return String.format("%d:%02d:%02d", s / 3600, (s % 3600) / 60, (s % 60));
+    }
 }

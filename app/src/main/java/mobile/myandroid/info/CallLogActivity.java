@@ -8,7 +8,6 @@ import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.provider.CallLog;
-import android.provider.Contacts;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -21,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -80,7 +80,7 @@ public class CallLogActivity extends BaseActivity implements LoaderManager.Loade
             case 2: //load contacts list
                 return new CursorLoader(
                         this,
-                        Contacts.CONTENT_URI,
+                        CallLog.Calls.CONTENT_URI,
                         null,
                         null,
                         null,
@@ -100,9 +100,9 @@ public class CallLogActivity extends BaseActivity implements LoaderManager.Loade
                 int type = data.getColumnIndex(CallLog.Calls.TYPE);
                 int date = data.getColumnIndex(CallLog.Calls.DATE);
                 int duration = data.getColumnIndex(CallLog.Calls.DURATION);
-
                 int name = data.getColumnIndex(CallLog.Calls.CACHED_NAME);
-
+                //int photoId = data.getColumnIndex(CallLog.Calls.CACHED_PHOTO_ID);
+                //int photoUri = data.getColumnIndex(CallLog.Calls.CACHED_PHOTO_URI);
 
                 CallLogsAdapter adapter = new CallLogsAdapter(this, items);
                 ListView listCallLogs = (ListView) findViewById(R.id.list_call_history);
@@ -115,6 +115,8 @@ public class CallLogActivity extends BaseActivity implements LoaderManager.Loade
                     String callDate = data.getString(date);
                     Date callDayTime = new Date(Long.valueOf(callDate));
                     long callDuration = data.getLong(duration);
+                    //String contactPhotoId = data.getString(photoId);
+                    //String contactPhotoUri = data.getString(photoUri);
 
                     String contactName = data.getString(name);
                     if (StringTool.isBlank(contactName)) contactName = getString(R.string.unknown);
@@ -126,19 +128,20 @@ public class CallLogActivity extends BaseActivity implements LoaderManager.Loade
                     switch (callTypeCode) {
                         case CallLog.Calls.OUTGOING_TYPE:
                             callDirection = "Outgoing";
-                            callDirectionDrawable = getResources().getDrawable(R.drawable.dialled_call);
+                            callDirectionDrawable = getResources().getDrawable(R.drawable.ic_call_made_green_48dp);
                             break;
 
                         case CallLog.Calls.INCOMING_TYPE:
                             callDirection = "Incoming";
-                            callDirectionDrawable = getResources().getDrawable(R.drawable.received_call);
+                            callDirectionDrawable = getResources().getDrawable(R.drawable.ic_call_received_blue_48dp);
                             break;
 
                         case CallLog.Calls.MISSED_TYPE:
-                            callDirectionDrawable = getResources().getDrawable(R.drawable.missed_call);
+                            callDirectionDrawable = getResources().getDrawable(R.drawable.ic_call_missed_red_48dp);
                             callDirection = "Missed";
                             break;
                     }
+
                     CallLogInfo callInfo = new CallLogInfo(phNumber, callDayTime);
                     callInfo.setCallDuration(callDuration);
                     callInfo.setCallDirection(callDirection);
@@ -276,11 +279,14 @@ public class CallLogActivity extends BaseActivity implements LoaderManager.Loade
 
             CallLogInfo callLogInfo = (CallLogInfo) getItem(position);
             //holder.imgContact.setImageDrawable(callLogInfo.getContactPhoto());
-            holder.imgContact.setImageDrawable(getResources().getDrawable(R.drawable.profile_pic));
+            holder.imgContact.setImageDrawable(getDrawable(R.drawable.ic_account_grey600_48dp));
             holder.txtContactName.setText(callLogInfo.getContactName());
             holder.txtContactNumber.setText(callLogInfo.getPhoneNumber());
-            holder.txtCallTime.setText(callLogInfo.getCallDate().toString());
-            holder.txtCallDuration.setText(String.valueOf(callLogInfo.getCallDuration()));
+
+            SimpleDateFormat dtFormat = new SimpleDateFormat("EEE, MM/dd/yyyy HH:mm:ss");
+            String callTime = dtFormat.format(callLogInfo.getCallDate());
+            holder.txtCallTime.setText(callTime);
+            holder.txtCallDuration.setText(StringTool.formatDuration(callLogInfo.getCallDuration()));
             holder.imgDirection.setImageDrawable(callLogInfo.getCalDirectionDrawable());
 
             return convertView;
