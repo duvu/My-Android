@@ -7,7 +7,7 @@
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/phone_apps_activity"
-    tools:context=".info.PhoneAppsActivity">
+    tools:context=".apps.PhoneAppsActivity">
     
     <RelativeLayout
         android:orientation="vertical"

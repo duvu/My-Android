@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/screen_shot_activity"
+    tools:showIn="@layout/activity_screen_shot"
     tools:context=".info.ScreenShotActivity">
     <TextView
         android:id="@+id/txt_screen_shot_guide"

@@ -15,7 +15,7 @@ import mobile.myandroid.info.CameraInformationActivity;
 import mobile.myandroid.info.InternetActivity;
 import mobile.myandroid.info.ManufacturerAndModelActivity;
 import mobile.myandroid.info.MemoryActivity;
-import mobile.myandroid.info.PhoneAppsActivity;
+import mobile.myandroid.apps.PhoneAppsActivity;
 import mobile.myandroid.info.RamActivity;
 import mobile.myandroid.info.ScreenDensityActivity;
 import mobile.myandroid.info.ScreenSizeActivity;
