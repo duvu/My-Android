@@ -7,13 +7,40 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_phone_apps"
     tools:context=".apps.PhoneAppsActivity">
+    <RelativeLayout
+        android:background="@color/colorSubToolbarPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+        <TextView
+            android:id="@+id/text_user_apps"
+            android:layout_toLeftOf="@+id/middle_split"
+            android:layout_toStartOf="@+id/middle_split"
+            android:text="@string/text_user_apps"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <View
+            android:id="@+id/middle_split"
+            android:layout_centerInParent="true"
+            android:layout_width="0.5dp"
+            android:background="@color/colorSubToolbarPrimaryDark"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:id="@+id/text_system_apps"
+            android:text="@string/text_system_apps"
+            android:layout_toRightOf="@+id/middle_split"
+            android:layout_toEndOf="@+id/middle_split"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
     <android.support.v4.view.ViewPager
         android:id="@+id/apps_view_pager"
         android:layout_marginTop="?attr/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-    <!--<ListView
-        android:id="@+id/list_phone_apps"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>-->
 </RelativeLayout>

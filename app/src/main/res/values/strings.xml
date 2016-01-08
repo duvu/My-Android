@@ -128,5 +128,7 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+    <string name="text_user_apps">User applications</string>
+    <string name="text_system_apps">System applications</string>
 
 </resources>

@@ -60,23 +60,10 @@ public class PhoneAppsActivity extends BaseActivity {
         }
         mViewPager = (ViewPager) findViewById(R.id.apps_view_pager);
         List<Fragment> lstFrag = new ArrayList<>();
-        lstFrag.add(PhoneAppsFragment.newInstance(systemApplications));
         lstFrag.add(PhoneAppsFragment.newInstance(userApplications));
+        lstFrag.add(PhoneAppsFragment.newInstance(systemApplications));
         mAdapter = new PhoneAppsPagerAdapter(getSupportFragmentManager(), lstFrag);
         mViewPager.setAdapter(mAdapter);
-
-        //List<AppItem> items = null;
-        /*ListView listPhoneApps = (ListView) findViewById(R.id.list_phone_apps);
-        PhoneAppsAdapter adapter = new PhoneAppsAdapter(this, systemApplications);
-        listPhoneApps.setAdapter(adapter);
-
-        listPhoneApps.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                AppItem item = (AppItem)parent.getItemAtPosition(position);
-                openApplication(PhoneAppsActivity.this, item.getPackageName());
-            }
-        });*/
     }
 
     @Override
