@@ -16,7 +16,7 @@
         android:layout_height="wrap_content" />
     <ImageView
         android:id="@+id/img_screen_size_base"
-        android:src="@drawable/dimension"
+        app:srcCompat="@drawable/dimension"
         android:layout_centerInParent="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

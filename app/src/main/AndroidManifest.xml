@@ -77,6 +77,10 @@
             android:name=".info.ManufacturerAndModelActivity"
             android:label="@string/manufacturer_and_model"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-7036763487648714~7050910156"/>
     </application>
 
 </manifest>

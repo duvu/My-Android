@@ -5,20 +5,17 @@ import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import mobile.myandroid.BaseActivity;
 import mobile.myandroid.R;
 
 /**
  * Created by beou on 26/10/2015.
  */
-public class InternetActivity extends BaseActivity {
+public class InternetActivity extends AppCompatActivity {
     private static final String TYPE_UNKNOWN            = "UNKNOWN";
     private static final String TYPE_NO_CONNECTION      = "NO CONNECTION";
     @Override
@@ -27,20 +24,8 @@ public class InternetActivity extends BaseActivity {
         setContentView(R.layout.activity_internet);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        //--
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this,
-                drawer,
-                toolbar,
-                R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        //--
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         NetworkInfo ni = getConnectionInfo();
         TextView txtInternetType = (TextView) findViewById(R.id.txt_internet_type);
@@ -53,7 +38,11 @@ public class InternetActivity extends BaseActivity {
         imgInternetIcon.setImageDrawable(netInfo.getIcon());
         txtInternetExtra.setText(netInfo.getName());
     }
-
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
     private NetworkInfo getConnectionInfo() {
         ConnectivityManager cm = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo ni = cm.getActiveNetworkInfo();

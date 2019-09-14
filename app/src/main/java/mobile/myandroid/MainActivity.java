@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +17,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +37,7 @@ import mobile.myandroid.info.ScreenSizeActivity;
 import mobile.myandroid.screenshot.ScreenshotActivity;
 
 public class MainActivity extends AppCompatActivity {
-
+    private AdView mAdView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
                 MainItem item = (MainItem)parent.getItemAtPosition(position);
                 switch (item.getTextId()) {
                     case R.string.my_phone_apps:
-                        //Toast.makeText(MainActivity.this, "Move to new MyPhoneApp Activity", Toast.LENGTH_LONG).show();
                         startActivity(PhoneAppsActivity.class);
                         break;
                     case R.string.memory:
@@ -101,6 +103,15 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        //-- load Ad
+        //loadAd();
+    }
+
+    private void loadAd() {
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
     }
 
     //-- start new activity

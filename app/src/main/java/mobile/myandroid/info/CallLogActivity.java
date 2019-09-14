@@ -1,17 +1,18 @@
 package mobile.myandroid.info;
 
+import android.Manifest;
 import android.app.LoaderManager;
 import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Loader;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.CallLog;
-import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,49 +20,65 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import mobile.myandroid.BaseActivity;
 import mobile.myandroid.R;
 import mobile.myandroid.util.StringTool;
 
 /**
  * Created by beou on 26/10/2015.
  */
-public class CallLogActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Cursor>{
-    List<CallLogInfo> items;
+public class CallLogActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+
+    private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
+    List<CallLogInfo> callLogInfoList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_call_history);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        //--
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this,
-                drawer,
-                toolbar,
-                R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        //--
-
-        items = new ArrayList<>();
+        callLogInfoList = new ArrayList<>();
         initialize();
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
     private void initialize() {
-        getLoaderManager().initLoader(1, null, CallLogActivity.this);
+        // Check the SDK version and whether the permission is already granted or not.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.READ_CONTACTS, Manifest.permission.READ_CALL_LOG}, PERMISSIONS_REQUEST_READ_CONTACTS);
+            //After this point you wait for callback in onRequestPermissionsResult(int, String[], int[]) overriden method
+        } else {
+            startLoading();
+        }
+    }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == PERMISSIONS_REQUEST_READ_CONTACTS) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission is granted
+                startLoading();
+            } else {
+                Toast.makeText(this, "Until you grant the permission, we canot display the names", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void startLoading() {
+        getLoaderManager().initLoader(1, null, CallLogActivity.this);
     }
 
     @Override
@@ -104,7 +121,7 @@ public class CallLogActivity extends BaseActivity implements LoaderManager.Loade
                 //int photoId = data.getColumnIndex(CallLog.Calls.CACHED_PHOTO_ID);
                 //int photoUri = data.getColumnIndex(CallLog.Calls.CACHED_PHOTO_URI);
 
-                CallLogsAdapter adapter = new CallLogsAdapter(this, items);
+                CallLogsAdapter adapter = new CallLogsAdapter(this, callLogInfoList);
                 ListView listCallLogs = (ListView) findViewById(R.id.list_call_history);
                 listCallLogs.setAdapter(adapter);
 
@@ -147,7 +164,7 @@ public class CallLogActivity extends BaseActivity implements LoaderManager.Loade
                     callInfo.setCallDirection(callDirection);
                     callInfo.setCalDirectionDrawable(callDirectionDrawable);
                     callInfo.setContactName(contactName);
-                    items.add(callInfo);
+                    callLogInfoList.add(callInfo);
                 }
                 adapter.notifyDataSetChanged();
                 break;
@@ -172,12 +189,12 @@ public class CallLogActivity extends BaseActivity implements LoaderManager.Loade
             this.phoneNumber = phoneNumber;
         }
 
-        public CallLogInfo(String phoneNumber, Date callDate) {
+        CallLogInfo(String phoneNumber, Date callDate) {
             this.phoneNumber = phoneNumber;
             this.callDate = callDate;
         }
 
-        public String getPhoneNumber() {
+        String getPhoneNumber() {
             return phoneNumber;
         }
 
@@ -185,11 +202,11 @@ public class CallLogActivity extends BaseActivity implements LoaderManager.Loade
             this.phoneNumber = phoneNumber;
         }
 
-        public String getContactName() {
+        String getContactName() {
             return contactName;
         }
 
-        public void setContactName(String contactName) {
+        void setContactName(String contactName) {
             this.contactName = contactName;
         }
 

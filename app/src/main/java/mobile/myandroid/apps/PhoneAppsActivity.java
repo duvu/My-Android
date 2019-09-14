@@ -5,24 +5,21 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import mobile.myandroid.BaseActivity;
 import mobile.myandroid.R;
 
 /**
  * Created by beou on 26/10/2015.
  */
-public class PhoneAppsActivity extends BaseActivity {
+public class PhoneAppsActivity extends AppCompatActivity {
     private static PackageManager packageManager;
 
     ArrayList<AppItem> systemApplications = null;
@@ -37,21 +34,8 @@ public class PhoneAppsActivity extends BaseActivity {
         setContentView(R.layout.activity_phone_apps);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        //--
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this,
-                drawer,
-                toolbar,
-                R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        //--
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         try {
             getAppsList();
@@ -64,6 +48,12 @@ public class PhoneAppsActivity extends BaseActivity {
         lstFrag.add(PhoneAppsFragment.newInstance(systemApplications));
         mAdapter = new PhoneAppsPagerAdapter(getSupportFragmentManager(), lstFrag);
         mViewPager.setAdapter(mAdapter);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     @Override

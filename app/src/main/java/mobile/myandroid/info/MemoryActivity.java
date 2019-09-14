@@ -1,17 +1,17 @@
 package mobile.myandroid.info;
 
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import java.util.List;
 
-import mobile.myandroid.BaseActivity;
 import mobile.myandroid.R;
 import mobile.myandroid.storage.StorageInfo;
 import mobile.myandroid.storage.StorageUtils;
@@ -19,30 +19,18 @@ import mobile.myandroid.util.StringTool;
 
 /**
  * My Android
- * ${PACKAGE_NAME}
  * Created by beou on 26/10/2015.
  */
-public class MemoryActivity extends BaseActivity {
+public class MemoryActivity extends AppCompatActivity {
+    private AdView mAdView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memory);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        //--
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this,
-                drawer,
-                toolbar,
-                R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        //--
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         ProgressBar pbPhone = (ProgressBar) findViewById(R.id.pb_memory_phone);
         ProgressBar pbSdcard = (ProgressBar) findViewById(R.id.pb_memory_sdcard);
@@ -80,7 +68,20 @@ public class MemoryActivity extends BaseActivity {
             pbSdcard.setProgress(0);
             txtSdCardInfo.setText(getString(R.string.no_sdcard));
         }
+
+        loadAd();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
 
+    private void loadAd() {
+        mAdView = findViewById(R.id.adView1);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+    }
 }
