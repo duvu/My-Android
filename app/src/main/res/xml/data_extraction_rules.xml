@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data-extraction-rules>
+    <cloud-backup>
+        <!-- Backup the app preferences -->
+        <include domain="sharedpref" path="."/>
+        <!-- Exclude any sensitive data -->
+        <exclude domain="sharedpref" path="analytics.xml"/>
+        <exclude domain="sharedpref" path="user_data.xml"/>
+    </cloud-backup>
+    <device-transfer>
+        <!-- Include everything for device-to-device transfers -->
+        <include domain="sharedpref" path="."/>
+        <exclude domain="sharedpref" path="analytics.xml"/>
+        <exclude domain="sharedpref" path="user_data.xml"/>
+    </device-transfer>
+</data-extraction-rules> 

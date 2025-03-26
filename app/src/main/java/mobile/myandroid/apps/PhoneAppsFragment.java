@@ -7,6 +7,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,20 +26,24 @@ import java.util.List;
 import mobile.myandroid.R;
 
 /**
- * My-Android
- * mobile.myandroid.apps
- * Created by beou on 08/01/2016.
+ * PhoneAppsFragment displays a list of installed applications
+ * with their icons, names, and installation dates.
  */
 public class PhoneAppsFragment extends ListFragment {
+    private static final String TAG = "PhoneAppsFragment";
+    private static final String ARG_APP_LIST = "lst";
 
-    List<AppItem> listApps;
-    View view;
-    ListView listView;
+    private List<AppItem> listApps;
+    private View view;
 
+    /**
+     * Creates a new instance of PhoneAppsFragment with pre-populated app list
+     * @param listApps List of applications to display
+     * @return A new instance of PhoneAppsFragment
+     */
     public static PhoneAppsFragment newInstance(ArrayList<AppItem> listApps) {
-
         Bundle args = new Bundle();
-        args.putParcelableArrayList("lst", listApps);
+        args.putParcelableArrayList(ARG_APP_LIST, listApps);
         PhoneAppsFragment fragment = new PhoneAppsFragment();
         fragment.setArguments(args);
         return fragment;
@@ -49,47 +54,89 @@ public class PhoneAppsFragment extends ListFragment {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
         if (args != null) {
-            listApps = args.getParcelableArrayList("lst");
+            listApps = args.getParcelableArrayList(ARG_APP_LIST);
         } else {
-            listApps = null;
+            listApps = new ArrayList<>();
         }
     }
-    /**
-     * The Fragment's UI is just a simple text view showing its
-     * instance number.
-     */
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_pager_list, container, false);
-        //listView = (ListView) view.findViewById(R.id.)
-        //View tv = v.findViewById(R.id.text);
-        //((TextView)tv).setText("Fragment #" + mNum);
         return view;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setListAdapter(new PhoneAppsAdapter(getActivity(), listApps));
-        /*setListAdapter(new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_list_item_1, Cheeses.sCheeseStrings));*/
+        setListAdapter(new PhoneAppsAdapter(requireActivity(), listApps));
     }
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        Log.i("FragmentList", "Item clicked: " + id);
+        Log.i(TAG, "Item clicked: " + id);
         AppItem app = (AppItem)l.getItemAtPosition(position);
-        openApplication(getActivity(), app.getPackageName());
+        openApplication(requireActivity(), app.getPackageName());
     }
 
+    /**
+     * Open an application by its package name
+     * @param context Application context
+     * @param packageName Package name of the app to open
+     */
+    private void openApplication(Context context, String packageName) {
+        PackageManager pm = context.getPackageManager();
+        Intent i = pm.getLaunchIntentForPackage(packageName);
+        if (i == null) {
+            Toast.makeText(context, R.string.cannot_open_app, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        i.addCategory(Intent.CATEGORY_LAUNCHER);
+        context.startActivity(i);
+    }
 
+    /**
+     * Uninstall an application
+     * @param item AppItem representing the app to uninstall
+     */
+    private void uninstallApp(AppItem item) {
+        if (isSystemPackage(item.getPackageInfo())) {
+            Toast.makeText(getActivity(), getString(R.string.cannot_remove_cause_system_app), Toast.LENGTH_LONG).show();
+        } else {
+            // Uninstall app through the system uninstaller
+            Uri packageURI = Uri.parse("package:" + item.getPackageName());
+            Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, packageURI);
+            startActivity(uninstallIntent);
+        }
+    }
 
+    /**
+     * Check if an app is a system package
+     * @param pkgInfo Package information
+     * @return true if system package, false otherwise
+     */
+    private boolean isSystemPackage(PackageInfo pkgInfo) {
+        return (pkgInfo.applicationInfo.flags &
+                ApplicationInfo.FLAG_SYSTEM) != 0;
+    }
 
+    /**
+     * View holder pattern for app list items
+     */
+    private static class AppViewHolder {
+        ImageView appIcon;
+        TextView appName;
+        TextView appInstalled;
+        ImageButton btnAppDel;
+    }
+
+    /**
+     * Adapter for displaying app information in a list
+     */
     private class PhoneAppsAdapter extends BaseAdapter {
-
-        private LayoutInflater mInflater;
-        private List<AppItem> items;
+        private final LayoutInflater mInflater;
+        private final List<AppItem> items;
 
         public PhoneAppsAdapter(Context context, List<AppItem> items) {
             this.mInflater = LayoutInflater.from(context);
@@ -113,67 +160,33 @@ public class PhoneAppsFragment extends ListFragment {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            AppViewHolder holder = null;
+            AppViewHolder holder;
             if (convertView == null) {
                 holder = new AppViewHolder();
                 convertView = mInflater.inflate(R.layout.list_item_phone_app, null);
 
-                holder.appIcon = (ImageView) convertView.findViewById(R.id.img_app_icon);
-                holder.appName =  (TextView) convertView.findViewById(R.id.txt_app_name);
-                holder.appInstalled = (TextView) convertView.findViewById(R.id.txt_app_installed);
-                holder.btnAppDel = (ImageButton) convertView.findViewById(R.id.btn_app_del);
+                holder.appIcon = convertView.findViewById(R.id.img_app_icon);
+                holder.appName = convertView.findViewById(R.id.txt_app_name);
+                holder.appInstalled = convertView.findViewById(R.id.txt_app_installed);
+                holder.btnAppDel = convertView.findViewById(R.id.btn_app_del);
                 convertView.setTag(holder);
             } else {
                 holder = (AppViewHolder)convertView.getTag();
             }
 
-            final AppItem item = (AppItem) getItem(position);
-
-            holder.appIcon.setImageDrawable(BitmapHelper.get(item.getAppName()));
-            holder.appName.setText(item.getAppName());
-            holder.appInstalled.setText(item.getInstalledDate().toString());
-            holder.btnAppDel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //-- show a dialogAlert
-                    //-- delete app
-                    uninstallApp(item);
-                }
-            });
+            final AppItem item = getItem(position);
+            if (item != null) {
+                holder.appIcon.setImageDrawable(BitmapHelper.get(item.getAppName()));
+                holder.appName.setText(item.getAppName());
+                holder.appInstalled.setText(item.getInstalledDate().toString());
+                holder.btnAppDel.setOnClickListener(v -> uninstallApp(item));
+                
+                // Set content description for accessibility
+                holder.btnAppDel.setContentDescription(
+                        getString(R.string.uninstall_app, item.getAppName()));
+            }
 
             return convertView;
         }
-    }
-
-    private void uninstallApp(AppItem item) {
-        if (isSystemPackage(item.getPackageInfo())) {
-            Toast.makeText(getActivity(), getString(R.string.cannot_remove_cause_system_app), Toast.LENGTH_LONG).show();
-        } else {
-            //Uninstall app here
-            Uri packageURI = Uri.parse("package:" + item.getPackageName());
-            Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, packageURI);
-            startActivity(uninstallIntent);
-        }
-    }
-    private void openApplication(Context context, String packageName) {
-        PackageManager pm = context.getPackageManager();
-        Intent i = pm.getLaunchIntentForPackage(packageName);
-        if (i == null) {
-            return;
-        }
-        i.addCategory(Intent.CATEGORY_LAUNCHER);
-        context.startActivity(i);
-        return;
-    }
-    private boolean isSystemPackage(PackageInfo pkgInfo) {
-        return (pkgInfo.applicationInfo.flags &
-                ApplicationInfo.FLAG_SYSTEM) != 0;
-    }
-
-    private class AppViewHolder {
-        ImageView appIcon;
-        TextView appName;
-        TextView appInstalled;
-        ImageButton btnAppDel;
     }
 }

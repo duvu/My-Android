@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- For now, we'll use an existing drawable as a placeholder for the privacy policy icon -->
+    <item name="icon_privacy_policy" type="drawable">@drawable/icon_android_version</item>
+</resources> 

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Menu item IDs -->
+    <item name="action_privacy_policy" type="id" />
+    <item name="action_privacy_options" type="id" />
+    <item name="action_settings" type="id" />
+</resources> 

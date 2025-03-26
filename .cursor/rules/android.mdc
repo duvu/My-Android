@@ -1,0 +1,130 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+## 1. Project and Code Structure
+- **Follow Android’s recommended architecture**: Adopt a clear separation of concerns (e.g., [MVVM](mdc:https:/developer.android.com/jetpack/guide) or MVP). This improves maintainability and testability.
+- **Use packages by feature**: Group files based on the app’s features or modules (e.g., `com.example.myapp.feature.login`) rather than by type (e.g., `activities`, `fragments`).
+- **Leverage Gradle**: Keep your dependencies up to date. Use Gradle’s build variants and flavors if you have multiple environments (dev, staging, prod).
+
+---
+
+## 2. Coding Conventions
+
+### 2.1 Java Language Conventions
+- **Naming**:  
+  - **Classes and Interfaces**: `PascalCase` (e.g., `MainActivity`, `LoginFragment`, `UserRepository`).  
+  - **Methods**: `camelCase` (e.g., `getUserData()`, `calculateSum()`), with verbs indicating the action.  
+  - **Variables/Fields**: `camelCase` (e.g., `userName`, `userRepository`).  
+  - **Constants**: `UPPER_CASE_SNAKE_CASE` (e.g., `MAX_USER_COUNT`).  
+- **Braces and Indentation**:  
+  - **Indentation**: Typically 4 spaces (avoid tabs in most style guides).  
+  - **Braces**: Open brace on the same line, close brace on a new line:  
+    ```java
+    if (something) {
+        // ...
+    } else {
+        // ...
+    }
+    ```  
+- **Line Length**: Aim for around 100–120 characters max per line for readability.  
+- **Commenting and JavaDoc**:  
+  - Use `//` for short comments.  
+  - Use `/** ... */` JavaDoc for classes, methods, and interfaces, explaining purpose, parameters, and return values.
+
+### 2.2 Resource Naming Conventions
+- **Layouts**: Use a prefix indicating the UI type: `activity_`, `fragment_`, `dialog_`, `item_`, etc. (e.g., `activity_main.xml`, `fragment_profile.xml`).  
+- **Drawables**: Use descriptive names indicating usage or purpose: `ic_user_avatar.xml`, `bg_login_screen.xml`.  
+- **Strings**: Use lowercase and underscore: `app_name`, `error_network_unavailable`.  
+- **IDs**: Use `snake_case`, referencing their parent or role: `btn_login`, `tv_user_name`, `et_password`.
+
+### 2.3 Linting and Formatting
+- **Checkstyle or Spotless**: Enforce a consistent code style and auto-format on commit.  
+- **Android Lint**: Run Android Lint regularly to detect potential bugs, performance issues, and style violations.
+
+---
+
+## 3. Use Modern Libraries and Frameworks
+- **Jetpack libraries**: Even in Java-based projects, you can leverage Android Jetpack components (LiveData, ViewModel, Room, Data Binding).
+- **Dependency injection**: Use Dagger 2 for Java-based projects to decouple dependencies (Hilt is a popular DI for Kotlin, but also has some Java interoperability).
+- **Networking**: Use Retrofit or OkHttp for network calls. Avoid legacy HTTP libraries.
+- **ORM or Data Persistence**: Use Room for local database persistence.
+
+---
+
+## 4. Memory Management and Performance
+- **Avoid memory leaks**:  
+  - Use **weak references** where necessary.  
+  - Unregister broadcast receivers and listeners in `onPause()` or `onDestroy()`.  
+  - Avoid storing long-lived references to `Context` (e.g., a static `Activity` reference).  
+- **Efficient image loading**: Use Glide or Picasso to handle caching and efficient image loading.
+- **Use background threads**: Perform heavy operations on background threads (ExecutorService, RxJava, etc.) to avoid blocking the main thread.
+
+---
+
+## 5. Handle Configuration Changes Gracefully
+- **Lifecycle awareness**: Understand Activity/Fragment lifecycle methods (`onCreate()`, `onStart()`, `onResume()`, etc.).  
+- **Retain important data**: Use `onSaveInstanceState()` for small data, or ViewModels / persistent storage for bigger data.  
+- **Avoid memory leaks with retained Fragments**: Properly manage references to the `Context` or views in retained Fragments.
+
+---
+
+## 6. UI/UX Design Practices
+- **Material Design guidelines**: Use Android’s [Material Components](mdc:https:/material.io/develop/android) for a consistent look and feel.  
+- **ConstraintLayout**: Prefer ConstraintLayout for complex UIs over nested LinearLayouts or RelativeLayouts.  
+- **Responsiveness**: Scale your UI for different screen sizes/densities. Use `res/values/dimens.xml` and resource qualifiers (e.g., `dimens-sw600dp.xml`) to tailor spacing.  
+- **Accessibility**: Provide content descriptions, ensure proper contrast, and support TalkBack and keyboard navigation where relevant.
+
+---
+
+## 7. Testing and Quality Assurance
+- **Unit tests**: Use JUnit and Mockito for business logic.  
+- **Instrumentation tests**: Use Espresso or UI Automator for UI tests on real devices or emulators.  
+- **Continuous Integration**: Automate builds and tests (GitHub Actions, Jenkins, GitLab CI, etc.).  
+- **Lint checks**: Keep your code aligned with best practices and standards by running lint checks regularly.
+
+---
+
+## 8. Security Best Practices
+- **Handle sensitive data carefully**: Never store API keys or passwords in plain text. Use secure storage or obfuscation if necessary.  
+- **HTTPS/TLS**: Always use secure connections to protect user data in transit.  
+- **ProGuard / R8**: Obfuscate your code (minifyEnabled) in release builds to deter reverse-engineering.  
+- **Permissions**: Only request necessary permissions. Provide rationale dialogs for dangerous permissions.
+
+---
+
+## 9. Logging and Crash Reporting
+- **Structured logging**: Use `Log.d()`, `Log.e()`, etc. wisely; avoid spamming logs in production.  
+- **Crashlytics or Firebase Crashlytics**: Gather runtime errors and issues from real-world usage.  
+- **Prevent private data leakage**: Remove or obscure sensitive data in logs or error reports.
+
+---
+
+## 10. Version Control and Collaboration
+- **Gitflow or trunk-based development**: Choose a branching strategy that suits your team.  
+- **Small, frequent commits**: Make code reviews easier and reduce risk of large rollbacks.  
+- **Pull requests / Merge requests**: Enforce peer review and automated checks before merging.
+
+---
+
+## 11. App Release and Deployment
+- **Versioning**: Use a consistent pattern for `versionCode` and `versionName` (e.g., Semantic Versioning).  
+- **Play Store compliance**: Stay up-to-date with Google Play Store policies (target API levels, privacy statements).  
+- **Gradle tasks**: Automate release builds and signing configurations to reduce manual errors.
+
+---
+
+## 12. Documentation
+- **Inline documentation**: Use JavaDoc-style comments on public classes, methods, and interfaces.  
+- **README**: Include setup instructions, environment configs, and coding standards.  
+- **Wiki / Confluence**: For larger teams, maintain a central knowledge base with architecture decisions and style guides.
+
+---
+
+## 13. Keep Learning and Updating
+- **Latest APIs**: Even when using Java, keep an eye on new Android APIs and Jetpack libraries.  
+- **Community resources**: Follow official Android documentation, watch Google I/O sessions, and stay active in relevant GitHub/Stack Overflow communities.  
+- **Migration strategy**: If you plan to move to Kotlin later, identify a roadmap and refactor incrementally.
+
+---

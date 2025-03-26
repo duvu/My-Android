@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <!-- Backup the app preferences -->
+    <include domain="sharedpref" path="."/>
+    <!-- Exclude any sensitive data -->
+    <exclude domain="sharedpref" path="analytics.xml"/>
+    <exclude domain="sharedpref" path="user_data.xml"/>
+</full-backup-content> 
